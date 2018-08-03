@@ -19,13 +19,18 @@ Plugin 'VundleVim/Vundle.vim'
 
 " plugin on GitHub repo
 "Plugin 'tpope/vim-fugitive'
+
 Plugin 'vim-airline/vim-airline.git'
 Plugin 'scrooloose/nerdtree.git'
+Plugin 'vim-latex/vim-latex.git'
+Plugin 'majutsushi/tagbar.git'
+" Plugin 'Valloric/YouCompleteMe.git'
+
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
 Plugin 'minibufexpl.vim'
-Plugin 'LaTeX-Suite-aka-Vim-LaTeX'
+Plugin 'a.vim'
 
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
@@ -44,6 +49,7 @@ Plugin 'LaTeX-Suite-aka-Vim-LaTeX'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+filetype indent on
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -62,7 +68,7 @@ filetype plugin indent on    " required
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
-behave mswin
+" behave mswin
 
 " set color scheme
 color desert
@@ -77,15 +83,27 @@ set spell
 set nobackup
 set nowritebackup
 set swapfile
-set dir=F:\temp
-"set encoding=utf-8
-set fileencodings=ucs-bom,utf-8,cp936
+set dir=E:\temp
+set encoding=utf-8
+"set fileencodings=ucs-bom,utf-8,cp936
+set fileencodings=utf-8,chinese,latin-1 
+if has("win32")
+set fileencoding=chinese
+else
+set fileencoding=utf-8
+endif
+"½â¾ö²Ëµ¥ÂÒÂë
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
+"½â¾öconsleÊä³öÂÒÂë
+language messages zh_CN.utf-8
+
 set fileencoding=gb2312
 "set termencoding=utf-8
 
 filetype indent on
 
-"////â†‘////â†‘////â†‘////â†‘////â†‘//// settings for vim  ////â†‘////â†‘////â†‘////â†‘////
+"////¡ü////¡ü////¡ü////¡ü////¡ü//// settings for vim  ////¡ü////¡ü////¡ü////¡ü////
 
 
 " ///////////////////////////////////////////////////////////////
@@ -95,7 +113,7 @@ filetype indent on
 " avoiding more than one minibufexplorer exists
 let g:miniBufExplorerMoreThanOne=0
 
-"////â†‘////â†‘////â†‘////â†‘//// minibuffer explorer ////â†‘////â†‘////â†‘////â†‘////
+"////¡ü////¡ü////¡ü////¡ü//// minibuffer explorer ////¡ü////¡ü////¡ü////¡ü////
 
 
 
@@ -123,8 +141,11 @@ filetype indent on
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
-let g:Tex_ViewRule_pdf = 'D:\program_files\FoxitReader\Foxit Reader.exe'
+let g:Tex_ViewRule_pdf = 'C:\Program Files (x86)\Tools\Foxit Reader.exe'
 let g:Tex_DefaultTargetFormat = 'pdf'
+
+" turn off Python for avoiding errors
+let g:Tex_UsePython = 1 
 
 function CompileXeTex()
     let g:Tex_DefaultTargetFormat = 'pdf' 
@@ -134,7 +155,27 @@ function CompileXeTex()
     let g:Tex_CompileRule_pdf=oldCompileRule
 endfunction
 map <Leader>lx :<C-U>call CompileXeTex()<CR>
-"////â†‘////â†‘////â†‘////â†‘//// vim-latex-suit ////â†‘////â†‘////â†‘////â†‘////
+map <F2> :bn<CR>
+"////¡ü////¡ü////¡ü////¡ü//// vim-latex-suit ////¡ü////¡ü////¡ü////¡ü////
+
+
+autocmd vimenter * NERDTree E:\research
+
+"let g:syntastic_python_python_exec = 'python3'
+"let g:ycm_global_ycm_extra_conf = 'D:\program_files\vim\vimfiles\bundle\YouCompleteMe\third_party\ycmd\.ycm_extra_conf.py' 
+
+"let g:ycm_server_python_interpreter = 'D:\program_files\Python\Python36\python.exe'
+"let g:ycm_python_binary_path = 'D:\program_files\Python\Python36\python.exe'
+
+let g:ycm_server_use_vim_stdout = 0
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
+
+let g:tagbar_ctags_bin = 'D:\program_files\single_bin\ctags.exe'
+let g:tagbar_right = 1
+"let g:tagbar_width = 60
+let g:tagbar_systemenc = 'utf-8'
+nmap <F8> :TagbarToggle<CR>
 
 set diffexpr=MyDiff()
 function MyDiff()
